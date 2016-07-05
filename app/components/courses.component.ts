@@ -18,6 +18,7 @@ interface IChangeFavorite {
       <div class="left-col">
         <vote
           [voteCount]="voteCount"
+          [myVote]="myVote"
         ></vote>
       </div>
       <div class="right-col">
@@ -47,9 +48,11 @@ interface IChangeFavorite {
 })
 
 export class CoursesComponent {
-  title = "The Courses For You:"
   courses: string[];
+
+  title = "The Courses For You:"
   voteCount = 10;
+  myVote = 0;
 
   constructor(courseService: CourseService){
     this.courses = courseService.getCourses();
