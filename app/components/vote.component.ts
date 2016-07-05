@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'vote',
@@ -33,16 +33,18 @@ import { Component, Input, Output } from '@angular/core';
 })
 export class VoteComponent {
   @Input() myVote : number = 0;
-  @Input() voteCount: number = 0;
+  @Input() voteCount : number = 0;
+  @Input() modelId : number;
+  @Output() change = new EventEmitter;
 
   upClick() {
     if (this.myVote === 0) {
       this.myVote = 1;
-      this.voteCount += this.myVote;
+      this.change.emit({modelId: this.modelId, newValue: this.voteCount + this.myVote });
     } else {
       if (this.myVote === -1) {
         this.myVote = 0;
-        this.voteCount++;
+        this.change.emit({modelId: this.modelId, newValue: this.voteCount + 1 });
       }
     }
   }
@@ -50,11 +52,11 @@ export class VoteComponent {
   downClick() {
     if (this.myVote === 0) {
       this.myVote = -1;
-      this.voteCount += this.myVote;
+      this.change.emit({modelId: this.modelId, newValue: this.voteCount + this.myVote });
     } else {
       if (this.myVote === 1) {
         this.myVote = 0;
-        this.voteCount--;
+        this.change.emit({modelId: this.modelId, newValue: this.voteCount - 1 });
       }
     }
   }
